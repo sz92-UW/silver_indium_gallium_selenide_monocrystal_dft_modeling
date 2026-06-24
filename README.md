@@ -1,38 +1,76 @@
-# First-Principles DFT Modeling of AgGa1-xInxSe2 Chalcopyrite Semiconductors
+# Ab Initio Engineering of Chalcopyrite Alloys: $AgGa_{1-x}In_xSe_2$
 
-## Overview
-This project uses first-principles density functional theory calculations to study AgGa1-xInxSe2 chalcopyrite semiconductors with different indium substitution concentrations. The workflow includes supercell model construction, vc-relax calculations, SCF calculations, and Fermi energy trend analysis.
+This repository contains the computational framework, input decks, and structural data for evaluating the electronic and structural trends of the chalcopyrite alloy system $AgGa_{1-x}In_xSe_2$ ($x = 0, 0.25, 0.50, 1.00$). Calculations were performed using Density Functional Theory (DFT) as implemented in the **Quantum ESPRESSO** suite, leveraged on the University of Washington's **Hyak (Klone)** supercomputer cluster.
 
-## Motivation
-AgGa1-xInxSe2 chalcopyrite semiconductors are relevant to optoelectronic and photovoltaic materials. Substituting In for Ga can tune the electronic behavior of the material, making DFT useful for understanding composition-property relationships.
+---
 
-## Methods
-- Quantum ESPRESSO
-- Density functional theory
-- PBE-GGA exchange-correlation functional
-- PAW pseudopotentials
-- 16-atom supercell models
-- vc-relax and SCF calculations
-- UW Hyak high-performance computing
-- Python-based data analysis and plotting
+## Project Overview
 
-## Results
-DFT calculations were performed for AgGa1-xInxSe2 compositions with different In concentrations. The calculated Fermi energy decreased systematically as In content increased, from 9.1756 eV for AgGaSe2 to 8.5626 eV for AgInSe2.
+Chalcopyrite semiconductors ($I-III-VI_2$) are highly regarded for optoelectronic and photovoltaic applications. This project systematically investigates how the chemical substitution of the Group III cation (replacing smaller $\text{Ga}$ with larger $\text{In}$) alters the underlying crystal lattice and electronic landscapes.
 
-## Skills Demonstrated
-- First-principles DFT modeling
-- Quantum ESPRESSO input preparation
-- HPC calculation workflow
-- Crystal structure relaxation
-- SCF electronic-structure calculation
-- Materials data analysis
-- Scientific plotting and technical reporting
+A $1 \times 1 \times 2$ tetragonal supercell configuration containing 16 atoms was engineered to cleanly simulate intermediate doping fractions ($x = 0.25$ and $x = 0.50$).
 
-## Repository Structure
-- `inputs/`: selected Quantum ESPRESSO input files
-- `results/`: cleaned result tables, including Fermi energy summary
-- `figures/`: plots generated from calculation results
-- `report/`: project summary report
+---
 
-## Notes
-This repository is a cleaned academic project summary. Large raw output folders, temporary calculation files, and unnecessary HPC scratch files are not included.
+## Computational Methodology
+
+* **Codebase:** Quantum ESPRESSO (`pw.x`)
+* **Functional:** Generalized Gradient Approximation (GGA-PBE) with Ultra-Soft Pseudopotentials (USPP)
+* **Kinetic Energy Cutoff:** `ecutwfc = 80.0 Ry`
+* **K-Point Grid:** $4 \times 4 \times 4$ Monkhosrt-Pack automatic grid for Self-Consistent Field (SCF) ground-state convergence.
+* **Electronic Smearing:** Gaussian smearing (`degauss = 0.02 Ry`) to handle convergence behaviors across varied alloy configurations.
+
+### Simulation Pipeline
+1. **Variable-Cell Relaxation (`vc-relax`):** Full optimization of internal atomic coordinates and lattice parameters ($a, c$) until total residual forces dropped below the $1.0 \times 10^{-4} \text{ Ry/Bohr}$ threshold.
+2. **Self-Consistent Field Calculation (`scf`):** Fixed-geometry execution evaluating high-precision electronic charge densities (`conv_thr = 1.0d-9`).
+3. **Electronic Properties:** Non-Self-Consistent Field (`nscf`) densified grids ($8 \times 8 \times 8$) and high-symmetry point path executions (`bands`) mapping out the Density of States (DOS) and Band Structures.
+
+---
+
+## Key Findings
+
+### 1. Lattice Expansion Metrics
+As Indium composition ($x$) scales to 100%, an anisotropic lattice expansion is observed due to the larger ionic radius of $\text{In}^{3+}$ relative to $\text{Ga}^{3+}$.
+
+| Concentration ($x$) | Cation Configuration | $a$ (Å) | $c$ (Å) |
+| :--- | :--- | :--- | :--- |
+| 0.00 ($AgGaSe_2$) | Pure End-member | 5.837 | 11.013 |
+| 0.25 | Symmetric Sub. | 5.873 | 11.187 |
+| 0.50 | Symmetric (50s) | 5.918 | 11.325 |
+| 1.00 ($AgInSe_2$) | Pure End-member | 5.983 | 11.766 |
+
+### 2. Local Anion Displacement
+Internal geometry relaxations capture the physical displacement of the Selenium ($\text{Se}$) anions. Because $\text{In-Se}$ bonds are inherently longer than $\text{Ga-Se}$ bonds, internal localized strains break the perfect tetrahedral symmetry, directly dictating the non-linear electronic band gap bowing across the mixing sweep.
+
+---
+
+## How to Reproduce
+
+To run these input decks on a Slurm-managed cluster environment like Hyak:
+
+```bash
+
+# Example: Running the 25% substitution ground state SCF
+sbatch scripts/run_25_scf.sh
+---
+
+## 3. Creating the Repo via Command Line
+
+Once you have your files ready on Hyak or your local machine, run these standard terminal commands to initialize and push your repository to GitHub:
+
+```bash
+# Initialize the local repository folder
+git init
+
+# Add all files to the tracking staging environment
+git add .
+
+# Commit with a clean description message
+git commit -m "Initial commit: Add input templates, lattice data, and project documentation"
+
+# Link to your personal remote GitHub repository
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/AgGaInSe2-DFT.git
+
+# Push your code online
+git push -u origin main
