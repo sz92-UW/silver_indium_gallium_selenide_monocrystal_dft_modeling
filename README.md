@@ -32,12 +32,12 @@ A $1 \times 1 \times 2$ tetragonal supercell configuration containing 16 atoms w
 ### 1. Lattice Expansion Metrics
 As Indium composition ($x$) scales to 100%, an anisotropic lattice expansion is observed due to the larger ionic radius of $\text{In}^{3+}$ relative to $\text{Ga}^{3+}$.
 
-| Concentration ($x$) | Cation Configuration | $a$ (Å) | $c$ (Å) | fermi_energy_eV |
+| Concentration ($x$) | Cation Configuration | $a$ (Å) | $c$ (Å) | Fermi_energy_eV |
 | :--- | :--- | :--- | :--- | :--- |
-| 0.00 ($AgGaSe_2$) | Pure End-member | 5.837 | 11.013 | 9.1756 |
-| 0.25 | Symmetric Sub. | 5.873 | 11.187 | 9.0312 |
-| 0.50 | Symmetric (50s) | 5.918 | 11.325 | 8.8922 |
-| 1.00 ($AgInSe_2$) | Pure End-member | 5.983 | 11.766 | 8.5626 |
+| 0.00 ($AgGaSe_2$) | Pure End-member | 5.837 | 11.013 |   9.1756 |
+| 0.25 | Symmetric Sub. | 5.873 | 11.187 |   9.0312 |
+| 0.50 | Symmetric (50s) | 5.918 | 11.325 |   8.8922 |
+| 1.00 ($AgInSe_2$) | Pure End-member | 5.983 | 11.766 |   8.5626 |
 
 ### 2. Local Anion Displacement
 Internal geometry relaxations capture the physical displacement of the Selenium ($\text{Se}$) anions. Because $\text{In-Se}$ bonds are inherently longer than $\text{Ga-Se}$ bonds, internal localized strains break the perfect tetrahedral symmetry, directly dictating the non-linear electronic band gap bowing across the mixing sweep.
